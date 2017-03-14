@@ -1,0 +1,552 @@
+android_resource(
+	name = 'res_modernDebug',
+	package = 'com.myhexaville.buck',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_modernDebug',
+	package = 'com.myhexaville.buck',
+	values = [
+		'String APPLICATION_ID = "com.myhexaville.buck"',
+		'String BUILD_TYPE = "debug"',
+		'String FLAVOR = "modern"',
+		'int VERSION_CODE = 1',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_modernDebug',
+	srcs = glob([
+		'src/main/java/**/*.java',
+	]),
+	manifest = 'build/okbuck/modernDebug/AndroidManifest.xml',
+	source = '7',
+	target = '7',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.2.0.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+		':build_config_modernDebug',
+		':res_modernDebug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_modernDebug',
+	srcs = [
+		'src/main/java',
+		'src/main/res',
+		'build/okbuck/modernDebug',
+	],
+	out = 'lint_modernDebug_out',
+	bash = '' \
+	'mkdir -p $OUT; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_modernDebug) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--resources src/main/res ' \
+	'build/okbuck/modernDebug ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_modernDebug',
+	skeleton = 'build/okbuck/modernDebug/AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_modernDebug',
+	manifest = ':manifest_modernDebug',
+	keystore = '//.okbuck/keystore/app:key_store_modernDebug.keystore',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.myhexaville.buck',
+		},
+	},
+	includes_vector_drawables = True,
+	deps = [
+		':res_modernDebug',
+		':src_modernDebug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_resource(
+	name = 'res_legacyDebug',
+	package = 'com.myhexaville.buck',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_legacyDebug',
+	package = 'com.myhexaville.buck',
+	values = [
+		'String APPLICATION_ID = "com.myhexaville.buck"',
+		'String BUILD_TYPE = "debug"',
+		'String FLAVOR = "legacy"',
+		'int VERSION_CODE = 1',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_legacyDebug',
+	srcs = glob([
+		'src/main/java/**/*.java',
+	]),
+	manifest = 'build/okbuck/legacyDebug/AndroidManifest.xml',
+	source = '7',
+	target = '7',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.2.0.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+		':build_config_legacyDebug',
+		':res_legacyDebug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_legacyDebug',
+	srcs = [
+		'src/main/java',
+		'src/main/res',
+		'build/okbuck/legacyDebug',
+	],
+	out = 'lint_legacyDebug_out',
+	bash = '' \
+	'mkdir -p $OUT; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_legacyDebug) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--resources src/main/res ' \
+	'build/okbuck/legacyDebug ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_legacyDebug',
+	skeleton = 'build/okbuck/legacyDebug/AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_legacyDebug',
+	manifest = ':manifest_legacyDebug',
+	keystore = '//.okbuck/keystore/app:key_store_legacyDebug.keystore',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.myhexaville.buck',
+		},
+	},
+	includes_vector_drawables = True,
+	deps = [
+		':res_legacyDebug',
+		':src_legacyDebug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_resource(
+	name = 'res_modernRelease',
+	package = 'com.myhexaville.buck',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_modernRelease',
+	package = 'com.myhexaville.buck',
+	values = [
+		'String APPLICATION_ID = "com.myhexaville.buck"',
+		'String BUILD_TYPE = "release"',
+		'String FLAVOR = "modern"',
+		'int VERSION_CODE = 1',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_modernRelease',
+	srcs = glob([
+		'src/main/java/**/*.java',
+	]),
+	manifest = 'build/okbuck/modernRelease/AndroidManifest.xml',
+	source = '7',
+	target = '7',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.2.0.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+		':build_config_modernRelease',
+		':res_modernRelease',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_modernRelease',
+	srcs = [
+		'src/main/java',
+		'src/main/res',
+		'build/okbuck/modernRelease',
+	],
+	out = 'lint_modernRelease_out',
+	bash = '' \
+	'mkdir -p $OUT; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_modernRelease) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--resources src/main/res ' \
+	'build/okbuck/modernRelease ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_modernRelease',
+	skeleton = 'build/okbuck/modernRelease/AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_modernRelease',
+	manifest = ':manifest_modernRelease',
+	keystore = '//.okbuck/keystore/app:key_store_modernRelease.keystore',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.myhexaville.buck',
+		},
+	},
+	includes_vector_drawables = True,
+	deps = [
+		':res_modernRelease',
+		':src_modernRelease',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_resource(
+	name = 'res_legacyRelease',
+	package = 'com.myhexaville.buck',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_legacyRelease',
+	package = 'com.myhexaville.buck',
+	values = [
+		'String APPLICATION_ID = "com.myhexaville.buck"',
+		'String BUILD_TYPE = "release"',
+		'String FLAVOR = "legacy"',
+		'int VERSION_CODE = 1',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_legacyRelease',
+	srcs = glob([
+		'src/main/java/**/*.java',
+	]),
+	manifest = 'build/okbuck/legacyRelease/AndroidManifest.xml',
+	source = '7',
+	target = '7',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.2.0.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+		':build_config_legacyRelease',
+		':res_legacyRelease',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_legacyRelease',
+	srcs = [
+		'src/main/java',
+		'src/main/res',
+		'build/okbuck/legacyRelease',
+	],
+	out = 'lint_legacyRelease_out',
+	bash = '' \
+	'mkdir -p $OUT; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_legacyRelease) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--resources src/main/res ' \
+	'build/okbuck/legacyRelease ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_legacyRelease',
+	skeleton = 'build/okbuck/legacyRelease/AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.2.0.aar',
+		'//.okbuck/cache:com.android.support.transition-25.2.0.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_legacyRelease',
+	manifest = ':manifest_legacyRelease',
+	keystore = '//.okbuck/keystore/app:key_store_legacyRelease.keystore',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.myhexaville.buck',
+		},
+	},
+	includes_vector_drawables = True,
+	deps = [
+		':res_legacyRelease',
+		':src_legacyRelease',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
